@@ -1,0 +1,32 @@
+version: "3"
+services:
+
+  asy-backend:
+    build:
+      context: ./asy-backend
+      dockerfile: ./Dockerfile
+      args: 
+       USER_UID: 1000
+    container_name: webapp
+    restart: always
+    volumes:
+      - ./asy-backend/asymptote-server:/home/asymptote/asymptote-server
+    networks:
+      - nginx-asywebapp
+  
+  nginx-frontend:
+    image: nginx:1.22
+    container_name: nginx2asy
+    restart: always
+    depends_on:
+      - asy-backend
+    volumes:
+      - ./nginx-frontend/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx-frontend/.htpasswd:/etc/nginx/.htpasswd:ro
+    ports:
+      - "0.0.0.0:9527:9527"
+    networks:
+      - nginx-asywebapp
+
+networks:
+  nginx-asywebapp:
