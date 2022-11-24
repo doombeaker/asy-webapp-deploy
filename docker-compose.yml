@@ -11,6 +11,7 @@ services:
     restart: always
     volumes:
       - ./asy-backend/asymptote-server:/home/asymptote/asymptote-server
+      - ./asy-backend/asy_extra_modules:/home/asymptote/.asy:ro
     networks:
       - nginx-asywebapp
   
