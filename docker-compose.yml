@@ -9,6 +9,8 @@ services:
        USER_UID: 1000
     container_name: webapp
     restart: always
+    environment:
+      - LIBGS=/usr/lib/x86_64-linux-gnu/libgs.so.10
     volumes:
       - ./asy-backend/asymptote-server:/home/asymptote/asymptote-server
       - ./asy-backend/asy_extra_modules:/home/asymptote/.asy:ro
