@@ -1,35 +1,17 @@
-version: "3"
 services:
 
   asy-backend:
     build:
       context: ./asy-backend
       dockerfile: ./Dockerfile
-      args: 
-       USER_UID: 1000
-    container_name: webapp
+      args:
+        USER_UID: 1000
+    container_name: asy-webapp
     restart: always
     environment:
       - LIBGS=/usr/lib/x86_64-linux-gnu/libgs.so.10
+      - ASYMPTOTE_PORT=80
     volumes:
-      - ./asy-backend/asymptote-server:/home/asymptote/asymptote-server
       - ./asy-backend/asy_extra_modules:/home/asymptote/.asy:ro
-    networks:
-      - nginx-asywebapp
-  
-  nginx-frontend:
-    image: nginx:1.22
-    container_name: nginx2asy
-    restart: always
-    depends_on:
-      - asy-backend
-    volumes:
-      - ./nginx-frontend/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx-frontend/.htpasswd:/etc/nginx/.htpasswd:ro
     ports:
-      - "0.0.0.0:9527:9527"
-    networks:
-      - nginx-asywebapp
-
-networks:
-  nginx-asywebapp:
+      - "0.0.0.0:9527:80"

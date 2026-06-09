@@ -1,1 +1,5 @@
-asy-backend/asymptote-server/
+# Build artifacts
+asy-backend/asymptoteWebApplication/node_modules/
+asy-backend/asymptoteWebApplication/build/
+asy-backend/asymptoteWebApplication/logs/
+asy-backend/asymptoteWebApplication/clients/

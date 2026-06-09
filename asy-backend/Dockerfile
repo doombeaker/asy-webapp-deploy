@@ -1,52 +1,57 @@
 FROM texlive/texlive:latest
 
-# install apt depencies
-RUN apt-get --allow-unauthenticated update \
-    && apt-get --allow-unauthenticated  install -y dirmngr \
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 871920D1991BC93C
+# Switch to Aliyun Debian mirror for faster apt in China
+RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources \
+    && sed -i 's|security.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources
 
-# apt-get based on mirrors
-COPY ubuntu20_sources.list /etc/apt/sources.list
-
+# Install apt dependencies
 RUN apt-get update \
-    && apt-get install -y sudo
+    && apt-get install -y --no-install-recommends \
+        sudo \
+        npm \
+    && rm -rf /var/lib/apt/lists/*
 
-# create user
+# Create non-root user
 ARG USERNAME=asymptote
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
-RUN echo $USER_UID
-RUN groupadd --gid $USER_GID $USERNAME \
-   && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
-   && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-   && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# set language
-RUN export LANGUAGE=en_US.UTF-8 && \
-    export LANG=en_US.UTF-8 && \
-    export LC_ALL=en_US.UTF-8
+RUN userdel -r texlive 2>/dev/null || true \
+    && groupadd --gid $USER_GID $USERNAME 2>/dev/null || true \
+    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && echo "$USERNAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# set time
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN echo 'Asia/Shanghai' >/etc/timezone
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends locales \
+    && sed -i '/en_US.UTF-8/s/^# //' /etc/locale.gen \
+    && locale-gen \
+    && rm -rf /var/lib/apt/lists/*
 
-# set user
-USER asymptote
-WORKDIR /home/asymptote
-RUN sudo chown -R asymptote:asymptote /tmp
+ENV LANGUAGE=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
 
-# set node & npm
-RUN sudo apt-get install -y npm \
-    && sudo npm i -g n && sudo n 16.13.1 \
-    && sudo rm -rf /usr/bin/node \
-    && sudo ln -s /usr/local/bin/node /usr/bin/node \
-    && npm config set registry https://registry.npm.taobao.org
+# Set timezone
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo 'Asia/Shanghai' > /etc/timezone
 
-# clean up
-RUN sudo rm -rf /tmp/*
+# Install Node 16.13.1 via n version manager
+RUN npm install -g n \
+    && n 16.13.1 \
+    && npm config set registry https://registry.npmmirror.com \
+    && rm -rf /usr/local/n/versions/node/* /tmp/*
 
-# run web app
-COPY run-webapp.sh /home/asymptote
+# Switch to non-root user
+USER $USERNAME
 
-ENTRYPOINT ["sh"]
-CMD ["run-webapp.sh"]
+# Copy and build asymptoteWebApplication (pre-clone to asy-backend/asymptoteWebApplication before building)
+COPY --chown=$USERNAME:$USERNAME asymptoteWebApplication /home/$USERNAME/asymptoteWebApplication
+
+RUN cd /home/$USERNAME/asymptoteWebApplication \
+    && npm install \
+    && make \
+    && rm -rf /tmp/*
+
+WORKDIR /home/$USERNAME/asymptoteWebApplication
+CMD ["make", "run"]
