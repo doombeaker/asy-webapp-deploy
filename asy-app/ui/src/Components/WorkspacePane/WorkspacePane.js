@@ -24,8 +24,8 @@ const WorkspacePane = ContainerConstructor((props) => {
         <Controls />
       </div>
       <WorkspaceBody />
-      <iframe id="logo" style={{ marginTop: "2rem" }} title="logoFrame" src="./logo3d.html" frameBorder="0"></iframe>
-      <div className={cssStyle.versionBox}> {props.asyVersion} </div>
+      {/* <iframe id="logo" style={{ marginTop: "2rem" }} title="logoFrame" src="./logo3d.html" frameBorder="0"></iframe> */}
+      {/* <div className={cssStyle.versionBox}> Asymptote {props.asyVersion} </div> */}
     </div>
   )
 })
