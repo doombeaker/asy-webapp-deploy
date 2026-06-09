@@ -1,5 +1,5 @@
 # Build artifacts
-asy-backend/asymptoteWebApplication/node_modules/
-asy-backend/asymptoteWebApplication/build/
-asy-backend/asymptoteWebApplication/logs/
-asy-backend/asymptoteWebApplication/clients/
+asy-app/node_modules/
+asy-app/build/
+asy-app/logs/
+asy-app/clients/

@@ -30,7 +30,9 @@ RUN apt-get update \
 
 ENV LANGUAGE=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8
+    LC_ALL=en_US.UTF-8 \
+    LIBGS=/usr/lib/x86_64-linux-gnu/libgs.so.10 \
+    ASYMPTOTE_PORT=80
 
 # Set timezone
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
@@ -45,13 +47,12 @@ RUN npm install -g n \
 # Switch to non-root user
 USER $USERNAME
 
-# Copy and build asymptoteWebApplication (pre-clone to asy-backend/asymptoteWebApplication before building)
-COPY --chown=$USERNAME:$USERNAME asymptoteWebApplication /home/$USERNAME/asymptoteWebApplication
+COPY --chown=$USERNAME:$USERNAME asy-app/package.json /home/$USERNAME/asy-app/package.json
+RUN cd /home/$USERNAME/asy-app && npm install
 
-RUN cd /home/$USERNAME/asymptoteWebApplication \
-    && npm install \
-    && make \
-    && rm -rf /tmp/*
+COPY --chown=$USERNAME:$USERNAME asy-app /home/$USERNAME/asy-app
+RUN cd /home/$USERNAME/asy-app && make
 
-WORKDIR /home/$USERNAME/asymptoteWebApplication
+WORKDIR /home/$USERNAME/asy-app
+EXPOSE 80
 CMD ["make", "run"]

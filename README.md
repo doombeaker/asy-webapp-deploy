@@ -1,30 +1,35 @@
-# Asymptote Web Application Deployment
+# Asymptote Web App
 
-Docker-based deployment of [asymptoteWebApplication](https://github.com/vectorgraphics/asymptoteWebApplication) — a web IDE for the Asymptote vector graphics language.
+Docker-based deployment of the [Asymptote](https://asymptote.sourceforge.io/) web IDE.
 
 ## Quick Start
 
-### 1. Clone the application source
-
 ```shell
-cd asy-backend \
-    && git clone https://github.com/vectorgraphics/asymptoteWebApplication.git \
-    && cd ..
-```
-
-### 2. Build and run
-
-```shell
-docker compose up -d --build
+./build.sh    # build docker image
+./run.sh      # start container
 ```
 
 The app will be available at `http://localhost:9527`.
 
+## Manual Build & Run
+
+```shell
+# Build image
+docker build -t asy-webapp .
+
+# Run container
+docker run -d \
+    --name asy-webapp \
+    --restart always \
+    -p 9527:80 \
+    -e LIBGS=/usr/lib/x86_64-linux-gnu/libgs.so.10 \
+    -v ./asy_extra_modules:/home/asymptote/.asy:ro \
+    asy-webapp
+```
+
 ## Configuration
 
-- **Port**: Change the host port mapping in `docker-compose.yml`:
-  ```yaml
-  ports:
-    - "0.0.0.0:<HOST_PORT>:80"
-  ```
-- **Extra Asymptote modules**: Place `.asy` files in `asy-backend/asy_extra_modules/` — they are mounted read-only into the container.
+- `build.sh` — `USER_UID` (default `1000`)
+- `run.sh` — `HOST_PORT` (default `9527`)
+
+Extra Asymptote modules can be placed in `asy_extra_modules/`.
