@@ -20,13 +20,13 @@
 }
 
 .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
-  background-color: white; /* The little square between H and V scrollbars */
+  background-color: #f8f9fc;
 }
 
 /* GUTTER */
 .CodeMirror-gutters {
-  border-right: 1px solid #ddd;
-  background-color: #f7f7f7;
+  border-right: 1px solid #e2e8f0;
+  background-color: #f8f9fc;
   white-space: nowrap;
 }
 .CodeMirror-linenumbers {}
@@ -38,8 +38,8 @@
   color: #999;
   white-space: nowrap;
 }
-.CodeMirror-guttermarker { color: black; }
-.CodeMirror-guttermarker-subtle { color: #999; }
+.CodeMirror-guttermarker { color: #1e293b; }
+.CodeMirror-guttermarker-subtle { color: #94a3b8; }
 
 /* CURSOR */
 .CodeMirror-cursor {
@@ -151,10 +151,10 @@
 .CodeMirror-composing { border-bottom: 2px solid; }
 
 /* Default styles for common addons */
-div.CodeMirror span.CodeMirror-matchingbracket {color: #0b0;}
-div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
-.CodeMirror-matchingtag { background: rgba(255, 150, 0, .3); }
-.CodeMirror-activeline-background {background: #e8f2ff;}
+div.CodeMirror span.CodeMirror-matchingbracket {color: #2563eb;}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #dc2626;}
+.CodeMirror-matchingtag { background: rgba(37, 99, 235, 0.1); }
+.CodeMirror-activeline-background {background: rgba(37, 99, 235, 0.04);}
 
 /* STOP */
 /* The rest of this file contains styles related to the mechanics of
@@ -163,7 +163,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
 .CodeMirror {
   position: relative;
   overflow: hidden;
-  background: white;
+  background: #ffffff;
 }
 .CodeMirror-scroll {
   overflow: scroll !important; /* Things will break if this is overridden */
@@ -198,12 +198,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
     width: 0.5rem;
 }
 .CodeMirror-vscrollbar::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.04);
 }
 .CodeMirror-vscrollbar::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
+    background-color: rgba(0, 0, 0, 0.13);
+    border-radius: 0.25rem;
 }
 
 .CodeMirror-hscrollbar {
@@ -215,12 +214,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
     height: 0.5rem;
 }
 .CodeMirror-hscrollbar::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.04);
 }
 .CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
+    background-color: rgba(0, 0, 0, 0.13);
+    border-radius: 0.25rem;
 }
 
 .CodeMirror-scrollbar-filler {
@@ -346,11 +344,11 @@ div.CodeMirror-dragcursors {
   visibility: visible;
 }
 
-.CodeMirror-selected { background: #d9d9d9; }
-.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-selected { background: rgba(37, 99, 235, 0.1); }
+.CodeMirror-focused .CodeMirror-selected { background: rgba(37, 99, 235, 0.15); }
 .CodeMirror-crosshair { cursor: crosshair; }
-.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
-.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: rgba(37, 99, 235, 0.15); }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: rgba(37, 99, 235, 0.15); }
 
 .cm-searching {
   background-color: #ffa;

@@ -1,4 +1,4 @@
-.toggleKeyShow, .toggleKeyHide{
+.toggleKeyShow, .toggleKeyHide {
     display: block;
     width: 2.5rem;
     margin-left: 0.5rem;
@@ -8,8 +8,10 @@
     background-image: url(../../assets/show.svg), url(../../assets/hide.svg);
     background-position: center;
     cursor: pointer;
+    filter: brightness(0);
 }
 
-.toggleKeyHide{
+.toggleKeyHide {
     background-image: url(../../assets/hide.svg);
+    filter: brightness(0) opacity(0.5);
 }

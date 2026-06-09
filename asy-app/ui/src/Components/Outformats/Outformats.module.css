@@ -1,13 +1,15 @@
-.label{
+.label {
     margin: 0.125rem;
     margin-left: 0.5rem;
+    color: var(--text-secondary);
 }
-.input{
+.input {
     min-width: 2rem;
     margin: 0;
     margin-right: 0.5rem;
     vertical-align: middle;
+    accent-color: var(--accent);
 }
-.label::selection, .input::selection{
+.label::selection, .input::selection {
     background-color: transparent;
 }

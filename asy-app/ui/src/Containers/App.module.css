@@ -5,50 +5,58 @@
     flex-direction: column;
     overflow-y: hidden;
 }
-/* ====================================== Header Region */
-.header{
+
+.header {
     flex: 0 1 auto;
     display: flex;
     min-width: 1100px;
     justify-content: space-between;
-    background-color: #21252b;
-    border-bottom: 1px solid rgb(44, 44, 44);
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 0 rgba(88, 166, 255, 0.05);
 }
-.homeLink{
+
+.homeLink {
     display: block;
     min-width: 1.5rem;
     max-width: 2.5rem;
     outline: none;
     cursor: pointer;
 }
-.menuBar{
+
+.menuBar {
     display: flex;
     flex: 0 1 auto;
     width: 65%;
     justify-content: space-around;
     align-items: center;
 }
-.controls, .downloadPanel, .uploadRunPanel{
+
+.controls, .downloadPanel, .uploadRunPanel {
     display: flex;
     flex: 0 1 auto;
     align-items: center;
     font-size: 0.85rem;
-    color: rgb(200, 200, 200);
+    color: var(--text-primary);
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
-    border-radius: 3px;
+    border-radius: 4px;
     margin-right: 3px;
-    border: 1px solid rgb(176, 0, 0);
+    border: 1px solid var(--border);
     justify-content: space-around;
+    background-color: var(--bg-tertiary);
 }
-.controls, .uploadRunPanel{
+
+.controls, .uploadRunPanel {
     flex: 0 1 auto;
     margin-right: 3px;
 }
-.subcomponentContainer{
+
+.subcomponentContainer {
     display: flex;
 }
-.homeLink a{
+
+.homeLink a {
     display: block;
     margin-right: 1rem;
     min-height: 100%;
@@ -56,50 +64,53 @@
     background-repeat: no-repeat;
     background-image: url(../assets/home.svg), url(../assets/homeHover.svg);
     background-position: center;
-
+    filter: brightness(0);
 }
-.homeLink a:hover{
+
+.homeLink a:hover {
     background-image: url(../assets/homeHover.svg);
+    filter: brightness(0) opacity(0.7);
 }
 
-/* ====================================== Central Region */
-.mainBody{
+.mainBody {
     flex: 17 1 0;
     display: flex;
     flex-direction: row;
     min-width: 75%;
     overflow-y: hidden;
 }
-.centralPanes{
+
+.centralPanes {
     flex: 6 1 0;
     display: flex;
     min-width: 904px;
     flex-direction: row;
     align-content: stretch;
 }
-.corePanes{
+
+.corePanes {
     display: flex;
     min-width: 452px;
     flex-direction: column;
     flex: 1 1 0;
-    border: 1px solid rgb(53, 56, 56);
+    border: 1px solid var(--border);
     border-top: none;
-    background-color: #21252b;
+    background-color: var(--bg-primary);
 }
 
 .appReplacement {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #21252b;
+    background-color: var(--bg-primary);
 }
 
-.maxLimit{
+.maxLimit {
     display: flex;
     flex: 1 1 0;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: var(--text-primary);
     font-size: 30px;
     font-weight: bold;
 }

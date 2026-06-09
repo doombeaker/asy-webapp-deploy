@@ -1,15 +1,16 @@
-.entries{
+.entries {
     display: block;
     position: relative;
     margin: 0.75rem auto;
     border: none;
     overflow-x: visible;
     z-index: 3;
+    border-radius: 4px;
 }
-.entries:hover{
-    background-color: rgb(104, 104, 104);
+.entries:hover {
+    background-color: var(--accent-dim);
 }
-.entries input{
+.entries input {
     font-size: 1rem;
     text-align: left;
     margin: 0 auto;
@@ -17,15 +18,14 @@
     padding-left: 0.75rem;
     padding-top: 0.35rem;
     padding-bottom: 0.35rem;
-    color:  rgb(220, 220, 220);
+    color: var(--text-primary);
     outline: none;
     border: none;
     background-color: transparent;
 }
-
-.entries input::selection{
+.entries input::selection {
     background-color: transparent;
 }
-.entries input::placeholder{
-    color: rgb(150, 150, 150);
+.entries input::placeholder {
+    color: var(--text-muted);
 }

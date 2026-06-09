@@ -1,14 +1,16 @@
-.label{
+.label {
     flex: 1 1 0;
     margin: 0.125rem;
     margin-left: 0.5rem;
+    color: var(--text-secondary);
 }
-.input{
+.input {
     flex: 1 1 0;
     min-width: 2rem;
-    margin: 0;;
+    margin: 0;
     vertical-align: middle;
+    accent-color: var(--accent);
 }
-.label::selection, .input::selection{
+.label::selection, .input::selection {
     background-color: transparent;
 }

@@ -1,26 +1,29 @@
-.outputPreview, .outputElse{
+.outputPreview, .outputElse {
     flex: 10 1 0;
     font-family: inherit;
     border: none;
 }
-.outputPreview{
+.outputPreview {
     display: block;
     margin: 0 auto;
     width: 100%;
     height: 100%;
+    background-color: #ffffff;
 }
-.outputElse div{
+.outputElse div {
     font-size: 1rem;
     padding: 1.5rem;
-    color: rgb(200, 200, 200);
+    color: var(--text-primary);
 }
 .outputElse p {
     font-size: 1rem;
     padding: 1rem;
-    color: rgb(200, 200, 200);
+    color: var(--text-secondary);
+    font-family: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+    font-size: 0.85rem;
 }
-.outputElse h4{
+.outputElse h4 {
     padding: 0;
     margin-bottom: -1rem;
-    color: #b00000;
+    color: var(--danger);
 }

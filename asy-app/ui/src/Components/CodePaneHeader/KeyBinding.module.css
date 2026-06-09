@@ -35,13 +35,13 @@
     line-height: 1.5rem;
     cursor: pointer;
     outline: none;
-    border: none;
-    color: rgb(200, 200, 200);
-    border-radius: 0.125rem;
-    /* box-shadow: 0rem 0.065rem 0.065rem 0.065rem black; */
-    background-color: rgb(53, 56, 56);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 4px;
+    background-color: var(--bg-tertiary);
 }
 
 .kbTextEditor:hover {
-    background-color: rgb(103, 106, 106);
+    background-color: var(--bg-elevated);
+    border-color: var(--border-accent);
 }

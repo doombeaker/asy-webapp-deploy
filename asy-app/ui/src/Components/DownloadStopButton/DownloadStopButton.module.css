@@ -1,4 +1,4 @@
-.Btn, .BtnAnimated{
+.Btn, .BtnAnimated {
     flex: 1 1 0;
     display: block;
     position: relative;
@@ -7,26 +7,28 @@
     min-width: 8rem;
     margin: 0.125rem;
     line-height: 1.5rem;
-    color: rgb(200, 200, 200);
+    color: var(--text-primary);
     text-align: center;
     cursor: pointer;
     outline: none;
-    border: none;
-    border-radius: 0.125rem;
-    background-color: rgb(53, 56, 56);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--bg-tertiary);
 }
-.Btn:hover{
-    background-color: rgb(103, 106, 106);  
+.Btn:hover {
+    background-color: var(--bg-elevated);
+    border-color: var(--border-accent);
+    box-shadow: 0 0 6px rgba(88, 166, 255, 0.15);
 }
 
-@keyframes loaderAnimation{
-    0% {transform: rotateZ(0deg)}
-    100% {transform: rotateZ(360deg)}
+@keyframes loaderAnimation {
+    0% { transform: rotateZ(0deg) }
+    100% { transform: rotateZ(360deg) }
 }
-.BtnAnimated:hover{
-    background-color: rgb(103, 106, 106);  
+.BtnAnimated:hover {
+    background-color: var(--bg-elevated);
 }
-.BtnAnimated::after{
+.BtnAnimated::after {
     display: block;
     position: absolute;
     content: " ";
