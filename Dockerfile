@@ -38,10 +38,12 @@ ENV LANGUAGE=en_US.UTF-8 \
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo 'Asia/Shanghai' > /etc/timezone
 
+ENV npm_config_registry=https://registry.npmmirror.com \
+    N_NODE_MIRROR=https://npmmirror.com/mirrors/node
+
 # Install Node 16.13.1 via n version manager
 RUN npm install -g n \
     && n 16.13.1 \
-    && npm config set registry https://registry.npmmirror.com \
     && rm -rf /usr/local/n/versions/node/* /tmp/*
 
 # Switch to non-root user
