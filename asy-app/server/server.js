@@ -1,5 +1,5 @@
 import { existsSync, createReadStream, appendFile } from "fs";
-import { dirname } from "path";
+import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import express from "express";
 import expressStaticGzip from "express-static-gzip";
@@ -8,18 +8,16 @@ import { reqTypeRouter, reqAnalyzer, delAnalyzer, usrConnect, requestResolver, w
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const APP_ROOT = resolve(__dirname, "..");
 
 const defaultPort = 80;
 const port = (process.env.ASYMPTOTE_PORT == undefined)? defaultPort: parseInt(process.env.ASYMPTOTE_PORT);
 
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Express Application
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 const app = express();
-// Serving Static html File & Running Major Requests
-// -------------------------------------------------
+
 app.route("/")
-.get(express.static(__dirname + "/build"))
-.post(reqTypeRouter(), usrConnect(__dirname), reqAnalyzer(__dirname), writeAsyFile(__dirname), requestResolver())
+.get(express.static(APP_ROOT + "/build"))
+.post(reqTypeRouter(), usrConnect(APP_ROOT), reqAnalyzer(APP_ROOT), writeAsyFile(APP_ROOT), requestResolver())
 .post(reqTypeRouter(), (req, res, next) => {
   console.log(req.body);
   next();
@@ -27,29 +25,23 @@ app.route("/")
 
 
 app.route("/delete")
-.post(express.text(), delAnalyzer(__dirname));
+.post(express.text(), delAnalyzer(APP_ROOT));
 
-// Serving Static Logo html File
-// ----------------------------------------
 app.route("/logo3d.html")
-.get(expressStaticGzip(__dirname + "/build"));
+.get(expressStaticGzip(APP_ROOT + "/build"));
 
-// Serving Other Static Files
-// ----------------------------------------
 app.use("/static/", function(req, res, next) {
   if (/\/(?:css|js|media)\//.test(req.originalUrl)) {
     let urlMatched = /^\/static\/(?:css|js|media)\/(.+\.(?:css|js|map|svg)$)/g.exec(req.originalUrl);
     if (urlMatched !== null && urlMatched[1] !== undefined) {
-      res.sendFile(__dirname + "/build" + urlMatched[0]);
+      res.sendFile(APP_ROOT + "/build" + urlMatched[0]);
     }
   }
 })
 
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Iframe Request
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 app.use("/clients", (req, res, next) => {
   if (req.method === "GET") {
-    const fileToServe = __dirname + req.originalUrl;
+    const fileToServe = APP_ROOT + req.originalUrl;
     if (existsSync(fileToServe)) {
       createReadStream(fileToServe).pipe(res);
     }
@@ -59,14 +51,10 @@ app.use("/clients", (req, res, next) => {
 });
 
 app.route("/clients")
-.post(express.urlencoded({extended: true}), reqAnalyzer(__dirname) , downloadReq(__dirname))
+.post(express.urlencoded({extended: true}), reqAnalyzer(APP_ROOT) , downloadReq(APP_ROOT))
 app.listen(port);
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Drop Root Permissions
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 dropRootPermission(port);
 
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    Error Handling
-// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 process.on("uncaughtException", (err) => {
   const diagnose = {
     errorType: "An uncaught error moved to the top of the stack!",
@@ -75,7 +63,7 @@ process.on("uncaughtException", (err) => {
     errorStack: err.stack,
   },
   diagnoseJSON = JSON.stringify(diagnose).replace(/\\n/g,'\n') + '\n';
-  const dest = __dirname + "/logs/uncaughtExceptions"
+  const dest = APP_ROOT + "/logs/uncaughtExceptions"
   if (err) {
     appendFile(dest, diagnoseJSON, (err) => {
       if (err) {

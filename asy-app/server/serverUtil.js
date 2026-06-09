@@ -1,13 +1,8 @@
 import fs from "fs";
 import { createRequire } from "module";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 import { customAlphabet } from 'nanoid'
 const require = createRequire(import.meta.url);
 const SHA1 = require("crypto-js/sha1")
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                      Flags
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,10 +27,9 @@ const uAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lAlphabets = "abcdefghijklmnopqrstuvwxyz";
 const digits = "0123456789"
 const nanoid = customAlphabet(digits + lAlphabets + uAlphabets, 4);
-export function usrID(ip) {
+export function usrID(ip, clientsPath) {
   let count = 0;
   const relativeIPBasedPath = SHA1(ip).toString();
-  const clientsPath = __dirname + "/clients";
   const files = fs.readdirSync(clientsPath);
   files.forEach((element) => {
     (element.includes(relativeIPBasedPath))? count++ : null;
@@ -120,12 +114,20 @@ export function removeDir(path) {
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%       drop root permission
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 export function dropRootPermission(port) {
+  if (process.getuid() !== 0) {
+    const home = process.env.HOME;
+    process.env.ASYMPTOTE_HOME = home + "/.asy";
+    console.log(`\nAsymptote Web Application started on port ${port} (uid ${process.getuid()})`);
+    console.log("Using home directory", home);
+    return;
+  }
+
   let uid = parseInt(process.env.ASYMPTOTE_UID);
   let gid = parseInt(process.env.ASYMPTOTE_GID);
 
-  if (uid === 0 || gid === 0) {
-    const user = process.env.ASYMPTOTE_USER;
-    console.log(`Cannot run as uid 0 or gid 0; please first adduser`, user);
+  if (isNaN(uid) || isNaN(gid) || uid === 0 || gid === 0) {
+    const user = process.env.ASYMPTOTE_USER || "asymptote";
+    console.log(`Cannot run as uid 0; please set ASYMPTOTE_UID/GID or adduser ${user}`);
     process.exit(-1);
   }
 

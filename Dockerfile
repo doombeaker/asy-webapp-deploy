@@ -49,12 +49,28 @@ RUN npm install -g n \
 # Switch to non-root user
 USER $USERNAME
 
-COPY --chown=$USERNAME:$USERNAME asy-app/package.json /home/$USERNAME/asy-app/package.json
-RUN cd /home/$USERNAME/asy-app && npm install
+# ── UI: install deps (cached unless package.json changes) ──
+COPY --chown=$USERNAME:$USERNAME asy-app/ui/package.json /home/$USERNAME/asy-app/ui/package.json
+RUN cd /home/$USERNAME/asy-app/ui && npm install
 
-COPY --chown=$USERNAME:$USERNAME asy-app /home/$USERNAME/asy-app
-RUN cd /home/$USERNAME/asy-app && make
+# ── UI: build (asy icons + react) ──
+COPY --chown=$USERNAME:$USERNAME asy-app/ui /home/$USERNAME/asy-app/ui
+RUN cd /home/$USERNAME/asy-app/ui && make
+
+# ── Server: install deps (cached unless package.json changes) ──
+COPY --chown=$USERNAME:$USERNAME asy-app/server/package.json /home/$USERNAME/asy-app/server/package.json
+RUN cd /home/$USERNAME/asy-app/server && npm install
+
+# ── Server: copy source ──
+COPY --chown=$USERNAME:$USERNAME asy-app/server /home/$USERNAME/asy-app/server
+
+# ── Move UI build output to where server expects it ──
+RUN mv /home/$USERNAME/asy-app/ui/build /home/$USERNAME/asy-app/build
+
+RUN mkdir -p /home/$USERNAME/asy-app/clients /home/$USERNAME/asy-app/logs
+
+RUN rm -rf /home/$USERNAME/asy-app/ui/node_modules /home/$USERNAME/asy-app/ui/src
 
 WORKDIR /home/$USERNAME/asy-app
 EXPOSE 80
-CMD ["make", "run"]
+CMD ["node", "server/server.js"]

@@ -25,17 +25,19 @@ export function reqTypeRouter() {
 export function usrConnect(serverDir) {
   return (req, res, next) => {
     if (req.body.reqType === "usrConnect") {
-      let id = usrID(req.ip);
+      let id = usrID(req.ip, serverDir + "/clients");
       if (id !== "-1") {
         var reqDest = usrDirMgr(req, serverDir, id);
         makeDir(reqDest.usrAbsDirPath);
       } else {
         reqDest = usrDirMgr(req, serverDir, "");
       }
-      const asyVersion = execSync('asy -c VERSION', {
-        timeout: 500,
-        encoding: "ascii"
-      })
+      let asyVersion;
+      try {
+        asyVersion = execSync('asy -c VERSION', { timeout: 500, encoding: "ascii" });
+      } catch {
+        asyVersion = "unknown";
+      }
       const dateAndTime = dateTime();
       const rawData = {
         usrIP: req.ip,

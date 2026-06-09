@@ -11,6 +11,14 @@ Docker-based deployment of the [Asymptote](https://asymptote.sourceforge.io/) we
 
 The app will be available at `http://localhost:9527`.
 
+## Project Structure
+
+```
+asy-app/
+  server/          Express backend (compiles & serves Asymptote code)
+  ui/              React frontend (CRA)
+```
+
 ## Manual Build & Run
 
 ```shell
@@ -22,7 +30,6 @@ docker run -d \
     --name asy-webapp \
     --restart always \
     -p 9527:80 \
-    -e LIBGS=/usr/lib/x86_64-linux-gnu/libgs.so.10 \
     -v ./asy_extra_modules:/home/asymptote/.asy:ro \
     asy-webapp
 ```
