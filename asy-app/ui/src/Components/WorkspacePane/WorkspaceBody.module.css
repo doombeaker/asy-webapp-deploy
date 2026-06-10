@@ -1,0 +1,21 @@
+.workspaceBody {
+    flex: 5 1 0;
+    max-height: 65vh;
+    overflow-y: auto;
+    overflow-x: visible;
+    border-top: 1px solid var(--border);
+    z-index: 2;
+}
+.workspaceBody::selection {
+    background-color: transparent;
+}
+.workspaceBody::-webkit-scrollbar {
+    width: 0.4rem;
+}
+.workspaceBody::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+.workspaceBody::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 0.25rem;
+}

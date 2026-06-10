@@ -1,0 +1,25 @@
+.Btn {
+    flex: 0 1 auto;
+    display: block;
+    position: relative;
+    font-family: inherit;
+    font-size: 0.85rem;
+    width: 5rem;
+    margin: 0.125rem;
+    line-height: 1.5rem;
+    color: var(--text-primary);
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--bg-tertiary);
+}
+.Btn:hover {
+    background-color: var(--danger-dim);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+.Btn:active {
+    box-shadow: none;
+}

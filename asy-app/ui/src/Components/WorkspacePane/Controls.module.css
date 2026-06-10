@@ -1,0 +1,32 @@
+.controller {
+    flex: 1 1 0;
+    line-height: 1.5rem;
+    max-width: 2rem;
+    margin-left: 0.1rem;
+    margin-right: 0.1rem;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    cursor: pointer;
+}
+.controller::selection {
+    background-color: transparent;
+}
+.controller:hover {
+    background-color: var(--accent-dim);
+    border-color: var(--border-accent);
+}
+.controllerAdd {
+    background-image: url(../../assets/add.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: brightness(0);
+}
+.controllerRemove {
+    background-image: url(../../assets/remove.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: brightness(0);
+}

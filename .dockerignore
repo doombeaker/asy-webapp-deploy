@@ -1,0 +1,6 @@
+.git
+.sisyphus
+**/node_modules
+**/build
+asy-app/clients
+asy-app/logs

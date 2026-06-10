@@ -1,0 +1,50 @@
+.terminalHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    font-family: inherit;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+.closeBtn {
+    display: block;
+    font-family: inherit;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--border);
+    outline: none;
+    background-color: transparent;
+    border-radius: 2px;
+    background-image: url(../../assets/close.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: brightness(0);
+}
+.closeBtn:hover {
+    background-color: var(--danger-dim);
+    border-color: var(--danger);
+    filter: brightness(0) invert(0.4) sepia(1) saturate(10) hue-rotate(-30deg);
+}
+.textarea {
+    flex: 2 1 0;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Menlo, Consolas, monospace;
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: var(--text-secondary);
+    outline: none;
+    border: none;
+    resize: inherit;
+    background-color: #f1f5f9;
+    font-size: 0.85rem;
+}
+.textarea::-webkit-scrollbar {
+    width: 0.4rem;
+}
+.textarea::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+.textarea::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 0.25rem;
+}
