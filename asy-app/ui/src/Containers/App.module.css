@@ -81,7 +81,7 @@
 }
 
 .centralPanes {
-    flex: 6 1 0;
+    flex: 1 1 0;
     display: flex;
     min-width: 904px;
     flex-direction: row;

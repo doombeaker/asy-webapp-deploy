@@ -6,14 +6,12 @@ import { workspaceInspector } from '../Util/util';
 
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                 COMPONENTS
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-import ToggleKey          from '../Components/ToggleKey/ToggleKey';
 import RunStopButton      from '../Components/RunStopButton/RunStopButton';
 import UploadButton       from '../Components/UploadButton/UploadButton';
 import DownloadStopButton from '../Components/DownloadStopButton/DownloadStopButton';
 import Options            from '../Components/Options/Options';
 import Outformats         from '../Components/Outformats/Outformats';
 import ClearButton        from '../Components/ClearButton/ClearButton';
-import WorkspacePane      from '../Components/WorkspacePane/WorkspacePane';
 import CodePaneHeader     from '../Components/CodePaneHeader/CodePaneHeader';
 import OutputPaneHeader   from '../Components/OutputPaneHeader/OutputPaneHeader';
 import Editor             from '../Components/Editor/Editor';
@@ -26,7 +24,6 @@ import {actionFact}       from "../Store/store";
 const ContainerConstructor = connect((store) => ({
   workspaces: store.workspaces,
   selectedWorkspace: store.selectedWorkspace,
-  workspacePaneStatus: store.workspacePaneStatus,
   usrID: store.usrID
 }), {
   assignUsrID: actionFact.assignUsrID,
@@ -44,7 +41,6 @@ const App = ContainerConstructor(class extends Component {
       return (
         <div id="AppCont" className={cssStyle.app}>
           <div className={cssStyle.header}>
-            <ToggleKey/>
             <div className={cssStyle.menuBar}>
               <div className={cssStyle.uploadRunPanel}>
                 <UploadButton cssClass={cssStyle.controls} />
@@ -64,7 +60,6 @@ const App = ContainerConstructor(class extends Component {
           </div>
 
           <div className={cssStyle.mainBody}>
-            <WorkspacePane asyVersion={this.props.asyVersion}/>
             <div className={cssStyle.centralPanes}>
               <div className={cssStyle.corePanes} style={(currentWorkspace.corePanesDisplay.codePane) ? { display: "flex" } : { display: "none" }}>
                 <CodePaneHeader />
